@@ -3,11 +3,8 @@ import openGdaxWebsocket from "../gdax-websocket"
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      tickerMessages: []
-    }
+  state = {
+    tickerMessages: []
   }
 
   componentDidMount() {
