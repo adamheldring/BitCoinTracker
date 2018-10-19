@@ -1,24 +1,15 @@
 import React from "react"
+import { LineChart, Line, Tooltip, Legend, YAxis, CartesianGrid } from "recharts"
 import openGdaxWebsocket from "../gdax-websocket"
-import { LineChart, Line, Tooltip, Legend, YAxis, CartesianGrid } from 'recharts';
 
 class App extends React.Component {
 
   state = {
     tickerMessages: [],
-    chartMin: -1,
-    chartMax: 6000,
-    testData: [
-      {name: 'Page A', myNumber: 4000, pv: 2400, amt: 2400},
-      {name: 'Page B', myNumber: 3000, pv: 1398, amt: 2210},
-      {name: 'Page C', myNumber: 2000, pv: 9800, amt: 2290},
-      {name: 'Page D', myNumber: 2780, pv: 3908, amt: 2000},
-      {name: 'Page E', myNumber: 1890, pv: 4800, amt: 2181},
-      {name: 'Page F', myNumber: 2390, pv: 3800, amt: 2500},
-      {name: 'Page G', myNumber: 0, pv: 4300, amt: 2100},
-    ]
+    devChartMin: -1,
+    devChartMax: 6000,
+    priceAt24hOpening: 0
   }
-
   componentDidMount() {
     this.websocket = openGdaxWebsocket("BTC-EUR", this.handleNewTickerMessage)
   }
@@ -28,11 +19,12 @@ class App extends React.Component {
   }
 
   handleNewTickerMessage = newTickerMessage => {
-    if (this.state.tickerMessages.length && (this.state.chartMin === -1)) {
+    if (this.state.tickerMessages.length) {
       this.setState({
-        chartMin: parseFloat(this.state.tickerMessages[0].low_24h  - 0.2),
-        chartMax: parseFloat(this.state.tickerMessages[0].high_24h + 0.2)
-      }, () => console.log("Daily low:", this.state.chartMin, "Daily high:", this.state.chartMax))
+        devChartMin: parseInt(this.state.tickerMessages[0].low_24h - 10, 10),
+        devChartMax: parseInt(this.state.tickerMessages[0].high_24h + 10, 10),
+        priceAt24hOpening: parseFloat(this.state.tickerMessages[0].open_24h)
+      })
     }
 
     this.setState(previousState => ({
@@ -40,36 +32,79 @@ class App extends React.Component {
     }), () => console.log(this.state.tickerMessages))
   }
 
+  trendUp = () => {
+    if (this.state.tickerMessages.length) {
+      return (this.state.tickerMessages[this.state.tickerMessages.length - 1].price >=
+        this.state.priceAt24hOpening)
+    } else {
+      return <p>Loading...</p>
+    }
+  }
+
   render() {
-
     return (
-      <div>
-        <LineChart width={400} height={400} data={this.state.tickerMessages}>
-          <Tooltip />
-          <Legend />
-          <YAxis type="number" domain={[this.state.chartMin, this.state.chartMax]} />
-          <Line type="monotone" dataKey="price" stroke="green" activeDot={{r: 8}} />
-          <Line type="monotone" dataKey="low_24h" stroke="purple" activeDot={{r: 8}} />
-          <Line type="monotone" dataKey="high_24h" stroke="pink" activeDot={{r: 8}} />
-        </LineChart>
+      <div className="master-wrapper">
+        <header className="header">
+          <img className="header__image" src="./coin.png" alt="bitcoin" />
+          <h1 className="header__title">
+            SEE YOUR <span className="header__title--highlight">B</span>C<br />
+            TRA<span className="header__title--highlight">C</span>K YA $TACK<br />
+            <span className="header__title--highlight">CHART</span> WITH YOUR HEART
+          </h1>
 
-        <LineChart width={400} height={400} data={this.state.tickerMessages}>
-          <Tooltip />
-          <Legend />
-          <CartesianGrid strokeDasharray="3 3"/>
-          <YAxis type="number" domain={["best_bid", "best_ask"]} />
-          <Line type="basis" dataKey="price" stroke="green" activeDot={{r: 8}} />
-          <Line type="monotone" dataKey="best_ask" stroke="red" activeDot={{r: 8}} />
-          <Line type="monotone" dataKey="best_bid" stroke="blue" activeDot={{r: 8}} />
-        </LineChart>
+        </header>
+        <section className="graph-container">
+          <h2 className="graph-container__header">DEVELOPMENT</h2>
+          <h2 className="graph-container__header">DEMAND</h2>
+          <LineChart className="graph" width={400} height={400} data={this.state.tickerMessages}>
+            <Tooltip />
+            <Legend />
+            <YAxis type="number" domain={[this.state.devChartMin, this.state.devChartMax]} />
+            <Line type="monotone" dataKey="price" stroke="green" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="low_24h" stroke="purple" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="high_24h" stroke="pink" activeDot={{ r: 8 }} />
+          </LineChart>
 
-        <div>
-          {this.state.tickerMessages.map(msg => (
-            <div key={msg.sequence}>
-              {msg.time}: <strong>{msg.price} EUR</strong>
-            </div>
-          ))}
-        </div>
+          <LineChart className="graph" width={400} height={400} data={this.state.tickerMessages}>
+            <Tooltip />
+            <Legend />
+            <CartesianGrid strokeDasharray="3 3" />
+            <YAxis type="number" domain={["best_bid", "best_ask"]} />
+            <Line type="basis" dataKey="price" stroke="green" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="best_ask" stroke="red" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="best_bid" stroke="blue" activeDot={{ r: 8 }} />
+          </LineChart>
+        </section>
+
+        <section className="info-section">
+          <div className="transactions-container">
+            <h2>TRANSACTIONS:</h2>
+            {this.state.tickerMessages.map(msg => (
+              <div key={msg.sequence}>
+                {msg.time}: <strong>{msg.price} EUR</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="trend-container">
+            <h2>24H BITCOIN TREND:</h2>
+            {this.state.tickerMessages.length > 1 &&
+              <div>
+                <p><strong>Opening:</strong> {this.state.priceAt24hOpening} EUR</p>
+                <p><strong>Now:</strong>
+                  {this.state.tickerMessages[this.state.tickerMessages.length - 1].price} EUR
+                </p>
+
+                {this.trendUp() ?
+                  <img className="trend-container__image" alt="trend up" src="./happy2.png" /> :
+                  <img className="trend-container__image" alt="trend down" src="./sad2.png" />
+                }
+              </div>
+            }
+          </div>
+
+        </section>
+
       </div>
     )
   }

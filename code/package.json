@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "eslint-config-technigo": "^1.5.0",
+    "node-sass": "^4.9.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "2.0.3",
