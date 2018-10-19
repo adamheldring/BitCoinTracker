@@ -27,8 +27,12 @@ class App extends React.Component {
       })
     }
 
-    this.setState(previousState => ({
-      tickerMessages: previousState.tickerMessages.concat([newTickerMessage])
+    let controlledTicker = this.state.tickerMessages.concat([newTickerMessage])
+    if (controlledTicker.length > 100) {
+      controlledTicker = controlledTicker.splice(controlledTicker.length - 100, 100)
+    }
+    this.setState((previousState) => ({
+      tickerMessages: controlledTicker
     }), () => console.log(this.state.tickerMessages))
   }
 
