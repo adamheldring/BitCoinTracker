@@ -95,7 +95,7 @@ class App extends React.Component {
             {this.state.tickerMessages.length > 1 &&
               <div>
                 <p><strong>Opening:</strong> {this.state.priceAt24hOpening} EUR</p>
-                <p><strong>Now:</strong>
+                <p><strong>Now: </strong> 
                   {this.state.tickerMessages[this.state.tickerMessages.length - 1].price} EUR
                 </p>
 
