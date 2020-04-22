@@ -33,7 +33,7 @@ class App extends React.Component {
     }
     this.setState((previousState) => ({
       tickerMessages: controlledTicker
-    }), () => console.log(this.state.tickerMessages))
+    }))
   }
 
   trendUp = () => {
