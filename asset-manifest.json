@@ -1,14 +1,14 @@
 {
-  "main.css": "/BitCoinTracker/static/css/main.d7c9e40e.chunk.css",
-  "main.js": "/BitCoinTracker/static/js/main.b5bd29bf.chunk.js",
-  "main.js.map": "/BitCoinTracker/static/js/main.b5bd29bf.chunk.js.map",
-  "static/js/1.53f19319.chunk.js": "/BitCoinTracker/static/js/1.53f19319.chunk.js",
-  "static/js/1.53f19319.chunk.js.map": "/BitCoinTracker/static/js/1.53f19319.chunk.js.map",
+  "main.css": "/BitCoinTracker/static/css/main.1da74963.chunk.css",
+  "main.js": "/BitCoinTracker/static/js/main.47066e81.chunk.js",
+  "main.js.map": "/BitCoinTracker/static/js/main.47066e81.chunk.js.map",
+  "static/js/1.1ae73f53.chunk.js": "/BitCoinTracker/static/js/1.1ae73f53.chunk.js",
+  "static/js/1.1ae73f53.chunk.js.map": "/BitCoinTracker/static/js/1.1ae73f53.chunk.js.map",
   "runtime~main.js": "/BitCoinTracker/static/js/runtime~main.37f71a91.js",
   "runtime~main.js.map": "/BitCoinTracker/static/js/runtime~main.37f71a91.js.map",
   "static/media/index.scss": "/BitCoinTracker/static/media/dollar.9093b2cc.jpg",
-  "static/css/main.d7c9e40e.chunk.css.map": "/BitCoinTracker/static/css/main.d7c9e40e.chunk.css.map",
+  "static/css/main.1da74963.chunk.css.map": "/BitCoinTracker/static/css/main.1da74963.chunk.css.map",
   "index.html": "/BitCoinTracker/index.html",
-  "precache-manifest.d241453dfb90138260402ae8582c0d66.js": "/BitCoinTracker/precache-manifest.d241453dfb90138260402ae8582c0d66.js",
+  "precache-manifest.c2b3bdd4b37c86d5b52674222bba48ba.js": "/BitCoinTracker/precache-manifest.c2b3bdd4b37c86d5b52674222bba48ba.js",
   "service-worker.js": "/BitCoinTracker/service-worker.js"
 }
