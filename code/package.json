@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://adamheldring.github.io/BitCoinTracker",
   "dependencies": {
-    "node-sass": "^4.9.4",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "2.0.3",
